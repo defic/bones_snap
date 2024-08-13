@@ -28,6 +28,13 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
         }
     });
 
+    let resource_population = input.resources.iter().map(|resource| {
+        let field_name = &resource.snake_case;
+        quote! {
+            world.insert_resource(self.#field_name);
+        }
+    });
+
     let collect_params = input.components.iter().map(|comp| {
         let field_name = &comp.snake_case;
         let type_name = &comp.type_name;
@@ -93,7 +100,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
                 serializables
             }
 
-            pub fn run_collect(world: &mut World) -> Vec<Self> {
+            pub fn run_collect(world: &World) -> Vec<Self> {
                 world.run_system(Self::collect, ())
             }
 
@@ -122,7 +129,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
         }
 
         impl WorldSnapshot {
-            pub fn collect(world: &mut World) -> Self {
+            pub fn collect(world: &World) -> Self {
                 let entities = SerializableEntity::run_collect(world);
                 WorldSnapshot {
                     entities,
@@ -130,7 +137,8 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
                 }
             }
 
-            pub fn populate(&self, world: &mut World) {
+            pub fn populate(self, world: &mut World) {
+                #(#resource_population )*
                 SerializableEntity::run_populate(world, self.entities.clone());
             }
         }

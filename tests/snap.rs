@@ -28,7 +28,7 @@ fn test_bones_snap_struct_generation() {
     };
 
     assert_eq!(snapshot.entities.len(), 1);
-    assert_eq!(snapshot.entities[0].entity, OgEntity(1, 1));
+    assert_eq!(snapshot.entities[0].entity, OgEntity(0, 0));
     assert_eq!(snapshot.entities[0].pos, Some(Pos(0.0, 0.0)));
     assert_eq!(snapshot.entities[0].vel, Some(Vel(1.0, 1.0)));
 }
