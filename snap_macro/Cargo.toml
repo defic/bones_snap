@@ -1,0 +1,11 @@
+[package]
+name = "snap_macro"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+snap_core = { path = "../snap_core" }
+syn = { version = "2.0", features = ["full"] }
+
+[lib]
+proc-macro = true
