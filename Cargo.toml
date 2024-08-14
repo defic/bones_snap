@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 snap_macro = { path = "snap_macro" }
 serde = { version = "1.0.204", features = ["derive"] }
+once_cell = "1.19"
 
 [dev-dependencies]
 bincode = "1.3.3"
