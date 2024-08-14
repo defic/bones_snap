@@ -1,4 +1,4 @@
-use input::WorldSnapshotInput;
+use input::BonesSnapInput;
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::parse2;
@@ -6,9 +6,8 @@ use syn::parse2;
 mod input;
 
 pub fn bones_snap(input: TokenStream) -> TokenStream {
-    let input = parse2::<WorldSnapshotInput>(input).unwrap();
+    let input = parse2::<BonesSnapInput>(input).unwrap();
 
-    //new stuff
     let component_stores_borrow = input.components.iter().map(|comp| {
         let field_name = &comp.snake_case;
         let type_name = &comp.type_name;
@@ -28,8 +27,6 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
         let field_name = &comp.snake_case;
         quote! { #field_name: #field_name.get(entity).cloned() }
     });
-
-    //old stuff:
 
     let resource_fields = input.resources.iter().map(|resource| {
         let field_name = &resource.snake_case;
@@ -110,15 +107,15 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
         }
 
         #[derive(Clone, Default, HasSchema, Serialize, Deserialize)]
-        pub struct WorldSnapshot {
+        pub struct BonesSnap {
             pub entity_containers: Vec<SerializableEntity>,
             #(#resource_fields, )*
         }
 
-        impl WorldSnapshot {
+        impl BonesSnap {
             pub fn collect(world: &World) -> Self {
                 let entity_containers = SerializableEntity::run_collect(world);
-                WorldSnapshot {
+                BonesSnap {
                     entity_containers,
                     #(#resource_field_initialization, )*
                 }

@@ -21,7 +21,7 @@ fn test_bones_snap_struct_generation() {
         vel: Some(Vel(1.0, 1.0)),
     };
 
-    let snapshot = WorldSnapshot {
+    let snapshot = BonesSnap {
         entity_containers: vec![entity],
         pos: Default::default(),
         vel: Default::default(),
