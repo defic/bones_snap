@@ -72,14 +72,6 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
 
     let expanded = quote! {
 
-        const BITSET_EXP: u32 = 32;
-        const BITSET_SIZE: usize = 2usize.saturating_pow(BITSET_EXP);
-        const BITSET_SLICE_COUNT: usize = BITSET_SIZE / (32 * 8 / 8);
-        static BITSET: once_cell::sync::Lazy<bones_ecs::bitset::BitSetVec> =
-            once_cell::sync::Lazy::new(|| {
-                bones_ecs::bitset::BitSetVec(vec![[u32::MAX; 8]; BITSET_SLICE_COUNT])
-            });
-
         #[derive(Clone, Default, Serialize, Deserialize, Debug)]
         pub struct SerializableEntity {
             pub entity: bones_ecs::entities::Entity,
@@ -95,8 +87,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
                 let entities = (*world.get_resource::<Entities>().unwrap()).clone();
                 let mut serializables = vec![];
 
-                //didn't find any other way to iterate over all entities, than: entities.iter_with_bitset
-                for (entity) in entities.iter_with_bitset(&*BITSET) {
+                for (entity) in entities.iter_with_bitset(entities.bitset()) {
 
                     let entity_container = SerializableEntity {
                         entity: entity.clone(),

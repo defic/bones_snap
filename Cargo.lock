@@ -176,7 +176,6 @@ version = "0.1.0"
 dependencies = [
  "bincode",
  "bones_ecs 0.3.0 (git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7)",
- "once_cell",
  "serde",
  "snap_macro",
 ]
