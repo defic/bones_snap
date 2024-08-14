@@ -74,7 +74,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
     };
 
     let expanded = quote! {
-        #[derive(Clone, Default, Serialize, Deserialize)]
+        #[derive(Clone, Default, Serialize, Deserialize, Debug)]
         pub struct SerializableEntity {
             pub entity: bones_snap::OgEntity,
             #(#component_fields,)*
@@ -139,7 +139,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
 
             pub fn populate(self, world: &mut World) {
                 #(#resource_population )*
-                SerializableEntity::run_populate(world, self.entities.clone());
+                SerializableEntity::run_populate(world, self.entities);
             }
         }
     };
