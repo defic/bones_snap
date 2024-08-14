@@ -22,13 +22,13 @@ fn test_bones_snap_struct_generation() {
     };
 
     let snapshot = WorldSnapshot {
-        entities: vec![entity],
+        entity_containers: vec![entity],
         pos: Default::default(),
         vel: Default::default(),
     };
 
-    assert_eq!(snapshot.entities.len(), 1);
-    assert_eq!(snapshot.entities[0].entity, Entity::new(0, 0));
-    assert_eq!(snapshot.entities[0].pos, Some(Pos(0.0, 0.0)));
-    assert_eq!(snapshot.entities[0].vel, Some(Vel(1.0, 1.0)));
+    assert_eq!(snapshot.entity_containers.len(), 1);
+    assert_eq!(snapshot.entity_containers[0].entity, Entity::new(0, 0));
+    assert_eq!(snapshot.entity_containers[0].pos, Some(Pos(0.0, 0.0)));
+    assert_eq!(snapshot.entity_containers[0].vel, Some(Vel(1.0, 1.0)));
 }

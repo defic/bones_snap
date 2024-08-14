@@ -82,12 +82,12 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
 
         impl SerializableEntity {
             fn collect(
-                entities: Res<Entities>,
+                entity_containers: Res<Entities>,
                 #(#collect_params,)*
             ) -> Vec<Self> {
                 let mut serializables = vec![];
 
-                for (entity, #component_tuple) in entities.iter_with((
+                for (entity, #component_tuple) in entity_containers.iter_with((
                     #(#iter_with_params,)*
                 )) {
                     let entity_container = SerializableEntity {
@@ -112,7 +112,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
                 for entity_data in input {
                     //using "unknown" entities could cause problems, since copying
                     //Entities resource is not supported (yet?)
-                    let entity: Entity = entity_data.entity.into(); //entities.create();
+                    let entity: Entity = entity_data.entity; //entities.create();
                     #(#populate_inserts)*
                 }
             }
@@ -124,22 +124,22 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
 
         #[derive(Clone, Default, HasSchema, Serialize, Deserialize)]
         pub struct WorldSnapshot {
-            pub entities: Vec<SerializableEntity>,
+            pub entity_containers: Vec<SerializableEntity>,
             #(#resource_fields, )*
         }
 
         impl WorldSnapshot {
             pub fn collect(world: &World) -> Self {
-                let entities = SerializableEntity::run_collect(world);
+                let entity_containers = SerializableEntity::run_collect(world);
                 WorldSnapshot {
-                    entities,
+                    entity_containers,
                     #(#resource_field_initialization, )*
                 }
             }
 
             pub fn populate(self, world: &mut World) {
                 #(#resource_population )*
-                SerializableEntity::run_populate(world, self.entities);
+                SerializableEntity::run_populate(world, self.entity_containers);
             }
         }
     };
