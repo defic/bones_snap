@@ -76,7 +76,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
     let expanded = quote! {
         #[derive(Clone, Default, Serialize, Deserialize, Debug)]
         pub struct SerializableEntity {
-            pub entity: bones_snap::OgEntity,
+            pub entity: bones_ecs::entities::Entity,
             #(#component_fields,)*
         }
 
@@ -91,7 +91,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
                     #(#iter_with_params,)*
                 )) {
                     let entity_container = SerializableEntity {
-                        entity: entity.into(),
+                        entity: entity.clone(),
                         #(#entity_container_fields,)*
                     };
                     serializables.push(entity_container);

@@ -1,5 +1,5 @@
 use bones_ecs::prelude::*;
-use bones_snap::{bones_snap, OgEntity};
+use bones_snap::bones_snap;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize, HasSchema, Default)]
@@ -16,7 +16,7 @@ fn test_bones_snap_struct_generation() {
     }
 
     let entity = SerializableEntity {
-        entity: OgEntity(0, 0),
+        entity: Entity::new(0, 0),
         pos: Some(Pos(0.0, 0.0)),
         vel: Some(Vel(1.0, 1.0)),
     };
@@ -28,7 +28,7 @@ fn test_bones_snap_struct_generation() {
     };
 
     assert_eq!(snapshot.entities.len(), 1);
-    assert_eq!(snapshot.entities[0].entity, OgEntity(0, 0));
+    assert_eq!(snapshot.entities[0].entity, Entity::new(0, 0));
     assert_eq!(snapshot.entities[0].pos, Some(Pos(0.0, 0.0)));
     assert_eq!(snapshot.entities[0].vel, Some(Vel(1.0, 1.0)));
 }

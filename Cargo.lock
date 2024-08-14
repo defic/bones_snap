@@ -69,7 +69,7 @@ checksum = "f421f1bcb30aa9d851a03c2920ab5d96ca920d5786645a597b5fc37922f8b89e"
 [[package]]
 name = "bones_ecs"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "anyhow",
  "atomicell",
@@ -78,13 +78,14 @@ dependencies = [
  "bones_schema",
  "bones_utils",
  "once_map",
+ "serde",
  "thiserror",
 ]
 
 [[package]]
 name = "bones_ecs_macros"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "bones_ecs_macros_core",
  "proc-macro2",
@@ -93,7 +94,7 @@ dependencies = [
 [[package]]
 name = "bones_ecs_macros_core"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -103,7 +104,7 @@ dependencies = [
 [[package]]
 name = "bones_schema"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "append-only-vec",
  "bones_schema_macros",
@@ -119,7 +120,7 @@ dependencies = [
 [[package]]
 name = "bones_schema_macros"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -132,7 +133,6 @@ version = "0.1.0"
 dependencies = [
  "bincode",
  "bones_ecs",
- "dont-expand",
  "serde",
  "snap_macro",
 ]
@@ -140,7 +140,7 @@ dependencies = [
 [[package]]
 name = "bones_utils"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "bones_utils_macros",
  "branches",
@@ -161,7 +161,7 @@ dependencies = [
 [[package]]
 name = "bones_utils_macros"
 version = "0.3.0"
-source = "git+https://github.com/fishfolk/bones?rev=f4e60340c123876a77b6e9d2988c59a24b17efe6#f4e60340c123876a77b6e9d2988c59a24b17efe6"
+source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "quote",
  "venial",
@@ -190,15 +190,6 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
-
-[[package]]
-name = "dont-expand"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8daa6a936e4177ffff0c9d1491ae1d0ca6eb3e6b21731b63e0cdf4f3714473a4"
-dependencies = [
- "paste",
-]
 
 [[package]]
 name = "erased-serde"
