@@ -228,4 +228,16 @@ mod tests {
         };
         parse2::<WorldSnapshotInput>(input).unwrap();
     }
+
+    #[test]
+    fn tons_of_elements() {
+        let input = quote! {
+            Components(Comp1, Comp2, Comp3,Comp4, Comp5, Comp6, Comp7, Comp8),
+            Components(Comp9, Comp10, Comp11, Comp12, Comp13, Comp14, Comp15, Comp16),
+            Components(Comp17, Comp18, Comp19, Comp20, Comp21, Comp22, Comp23, Comp24),
+            Components(Comp25, Comp26, Comp27, Comp28, Comp29),
+            Resources(Pos, Vel)
+        };
+        parse2::<WorldSnapshotInput>(input).unwrap();
+    }
 }
