@@ -69,7 +69,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
 
     let expanded = quote! {
 
-        #[derive(Clone, Default, Serialize, Deserialize)]
+        #[derive(Clone, Default, serde::Serialize, serde::Deserialize)]
         pub struct SerializableEntity {
             pub entity: bones_ecs::entities::Entity,
             #(#entity_container_component_fields,)*
@@ -106,7 +106,7 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
             }
         }
 
-        #[derive(Clone, Default, Serialize, Deserialize)]
+        #[derive(Clone, Default, serde::Serialize, serde::Deserialize)]
         pub struct BonesSnap {
             pub entity_containers: Vec<SerializableEntity>,
             #(#resource_fields, )*
