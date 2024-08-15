@@ -1,5 +1,7 @@
 # bones_snap
 
+NOTE! * Requires `serde` feature flag for bones_ecs [PR](https://github.com/fishfolk/bones/pull/438) *
+
 Macro for capturing & populating [bones_ecs](https://github.com/fishfolk/bones/) worlds, enabling effortless serde (de)serialization.
 
 ## Quick start:
