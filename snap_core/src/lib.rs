@@ -1,4 +1,4 @@
-use input::WorldSnapshotInput;
+use input::BonesSnapInput;
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::parse2;
@@ -6,12 +6,26 @@ use syn::parse2;
 mod input;
 
 pub fn bones_snap(input: TokenStream) -> TokenStream {
-    let input = parse2::<WorldSnapshotInput>(input).unwrap();
+    let input = parse2::<BonesSnapInput>(input).unwrap();
 
-    let component_fields = input.components.iter().map(|comp| {
+    let component_stores_borrow = input.components.iter().map(|comp| {
+        let field_name = &comp.snake_case;
+        let type_name = &comp.type_name;
+        quote! {
+            let #field_name = world.components.get_cell::<#type_name>();
+            let #field_name = #field_name.borrow();
+        }
+    });
+
+    let entity_container_component_fields = input.components.iter().map(|comp| {
         let field_name = &comp.snake_case;
         let type_name = &comp.type_name;
         quote! { pub #field_name: Option<#type_name> }
+    });
+
+    let set_entity_container_fields = input.components.iter().map(|comp| {
+        let field_name = &comp.snake_case;
+        quote! { #field_name: #field_name.get(entity).cloned() }
     });
 
     let resource_fields = input.resources.iter().map(|resource| {
@@ -35,26 +49,13 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
         }
     });
 
-    let collect_params = input.components.iter().map(|comp| {
+    let component_stores_borrow_mut = input.components.iter().map(|comp| {
         let field_name = &comp.snake_case;
         let type_name = &comp.type_name;
-        quote! { #field_name: Comp<#type_name> }
-    });
-
-    let iter_with_params = input.components.iter().map(|comp| {
-        let field_name = &comp.snake_case;
-        quote! { &Optional(&#field_name) }
-    });
-
-    let entity_container_fields = input.components.iter().map(|comp| {
-        let field_name = &comp.snake_case;
-        quote! { #field_name: #field_name.cloned() }
-    });
-
-    let populate_params = input.components.iter().map(|comp| {
-        let field_name = &comp.snake_case;
-        let type_name = &comp.type_name;
-        quote! { mut #field_name: CompMut<#type_name> }
+        quote! {
+            let #field_name = world.components.get_cell::<#type_name>();
+            let mut #field_name = (*#field_name).borrow_mut();
+        }
     });
 
     let populate_inserts = input.components.iter().map(|comp| {
@@ -66,72 +67,55 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
         }
     });
 
-    let component_tuple = if input.components.is_empty() {
-        quote! { () }
-    } else {
-        let components = input.components.iter().map(|comp| &comp.snake_case);
-        quote! { (#(#components,)*) }
-    };
-
     let expanded = quote! {
-        #[derive(Clone, Default, Serialize, Deserialize, Debug)]
+
+        #[derive(Clone, Default, Serialize, Deserialize)]
         pub struct SerializableEntity {
             pub entity: bones_ecs::entities::Entity,
-            #(#component_fields,)*
+            #(#entity_container_component_fields,)*
         }
 
         impl SerializableEntity {
-            fn collect(
-                entity_containers: Res<Entities>,
-                #(#collect_params,)*
-            ) -> Vec<Self> {
+
+            pub fn run_collect(world: &World) -> Vec<Self> {
+
+                #(#component_stores_borrow)*
+
+                let entities = (*world.get_resource::<Entities>().unwrap()).clone();
                 let mut serializables = vec![];
 
-                for (entity, #component_tuple) in entity_containers.iter_with((
-                    #(#iter_with_params,)*
-                )) {
+                for (entity) in entities.iter_with_bitset(entities.bitset()) {
+
                     let entity_container = SerializableEntity {
                         entity: entity.clone(),
-                        #(#entity_container_fields,)*
+                        #(#set_entity_container_fields,)*
                     };
                     serializables.push(entity_container);
                 }
-
                 serializables
             }
 
-            pub fn run_collect(world: &World) -> Vec<Self> {
-                world.run_system(Self::collect, ())
-            }
+            pub fn run_populate(world: &mut World, input: Vec<Self>) {
 
-            fn populate(
-                In(input): In<Vec<Self>>,
-                mut entities: ResMut<Entities>,
-                #(#populate_params,)*
-            ) {
+                #(#component_stores_borrow_mut)*
+
                 for entity_data in input {
-                    //using "unknown" entities could cause problems, since copying
-                    //Entities resource is not supported (yet?)
-                    let entity: Entity = entity_data.entity; //entities.create();
+                    let entity: Entity = entity_data.entity;
                     #(#populate_inserts)*
                 }
             }
-
-            pub fn run_populate(world: &mut World, content: Vec<Self>) {
-                world.run_system(Self::populate, content);
-            }
         }
 
-        #[derive(Clone, Default, HasSchema, Serialize, Deserialize)]
-        pub struct WorldSnapshot {
+        #[derive(Clone, Default, Serialize, Deserialize)]
+        pub struct BonesSnap {
             pub entity_containers: Vec<SerializableEntity>,
             #(#resource_fields, )*
         }
 
-        impl WorldSnapshot {
+        impl BonesSnap {
             pub fn collect(world: &World) -> Self {
                 let entity_containers = SerializableEntity::run_collect(world);
-                WorldSnapshot {
+                BonesSnap {
                     entity_containers,
                     #(#resource_field_initialization, )*
                 }

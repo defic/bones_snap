@@ -7,13 +7,13 @@ pub(crate) struct ComponentInfo {
     pub snake_case: Ident,
 }
 
-pub(crate) struct WorldSnapshotInput {
+pub(crate) struct BonesSnapInput {
     pub resources: Vec<ComponentInfo>,
     pub components: Vec<ComponentInfo>,
 }
 
 #[allow(unused)]
-impl WorldSnapshotInput {
+impl BonesSnapInput {
     fn resource_names(&self) -> Vec<Ident> {
         self.resources.iter().map(|x| x.type_name.clone()).collect()
     }
@@ -40,7 +40,7 @@ impl WorldSnapshotInput {
     }
 }
 
-impl syn::parse::Parse for WorldSnapshotInput {
+impl syn::parse::Parse for BonesSnapInput {
     fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
         let mut resources = Vec::new();
         let mut components = Vec::new();
@@ -106,7 +106,7 @@ impl syn::parse::Parse for WorldSnapshotInput {
             ));
         }
 
-        Ok(WorldSnapshotInput {
+        Ok(BonesSnapInput {
             resources,
             components,
         })
@@ -125,7 +125,7 @@ mod tests {
             Resources(Frame, RapierContext),
             Components(Vel, Pos, PhysicsHandle)
         };
-        let parsed = parse2::<WorldSnapshotInput>(input).unwrap();
+        let parsed = parse2::<BonesSnapInput>(input).unwrap();
         assert_eq!(parsed.resource_names(), vec!["Frame", "RapierContext"]);
         assert_eq!(
             parsed.resource_names_snaked(),
@@ -146,7 +146,7 @@ mod tests {
         let input = quote! {
             Resources(Frame, RapierContext)
         };
-        let parsed = parse2::<WorldSnapshotInput>(input).unwrap();
+        let parsed = parse2::<BonesSnapInput>(input).unwrap();
         assert_eq!(
             parsed.resource_names_snaked(),
             vec!["frame", "rapier_context"]
@@ -159,7 +159,7 @@ mod tests {
         let input = quote! {
             Components(Vel, Pos, PhysicsHandle)
         };
-        let parsed = parse2::<WorldSnapshotInput>(input).unwrap();
+        let parsed = parse2::<BonesSnapInput>(input).unwrap();
         assert!(parsed.resources.is_empty());
         assert_eq!(
             parsed.component_names(),
@@ -171,7 +171,7 @@ mod tests {
     #[should_panic(expected = "at least one of `Resources` or `Components` must be specified")]
     fn test_empty_input() {
         let input = quote! {};
-        parse2::<WorldSnapshotInput>(input).unwrap();
+        parse2::<BonesSnapInput>(input).unwrap();
     }
 
     #[test]
@@ -180,7 +180,7 @@ mod tests {
             Components(Vel, Pos),
             Resources(Frame)
         };
-        let parsed = parse2::<WorldSnapshotInput>(input).unwrap();
+        let parsed = parse2::<BonesSnapInput>(input).unwrap();
         assert_eq!(parsed.resource_names(), vec!["Frame"]);
         assert_eq!(parsed.component_names(), vec!["Vel", "Pos"]);
     }
@@ -193,7 +193,7 @@ mod tests {
             Resources(RapierContext),
             Components(Pos, PhysicsHandle)
         };
-        let parsed = parse2::<WorldSnapshotInput>(input).unwrap();
+        let parsed = parse2::<BonesSnapInput>(input).unwrap();
         assert_eq!(parsed.resource_names(), vec!["Frame", "RapierContext"]);
         assert_eq!(
             parsed.component_names(),
@@ -208,7 +208,7 @@ mod tests {
             Resources(Frame, RapierContext)
             Components(Vel, Pos, PhysicsHandle)
         };
-        parse2::<WorldSnapshotInput>(input).unwrap();
+        parse2::<BonesSnapInput>(input).unwrap();
     }
 
     #[test]
@@ -217,7 +217,7 @@ mod tests {
         let input = quote! {
             InvalidGroup(Something)
         };
-        parse2::<WorldSnapshotInput>(input).unwrap();
+        parse2::<BonesSnapInput>(input).unwrap();
     }
 
     #[test]
@@ -226,6 +226,6 @@ mod tests {
         let input = quote! {
             Resources Frame, RapierContext
         };
-        parse2::<WorldSnapshotInput>(input).unwrap();
+        parse2::<BonesSnapInput>(input).unwrap();
     }
 }

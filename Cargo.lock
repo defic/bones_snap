@@ -69,14 +69,29 @@ checksum = "f421f1bcb30aa9d851a03c2920ab5d96ca920d5786645a597b5fc37922f8b89e"
 [[package]]
 name = "bones_ecs"
 version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55d23cd7a575b8d83815c7e33b6c330dca839d799b3db2163901d24a412fdc4d"
+dependencies = [
+ "anyhow",
+ "atomicell",
+ "bitset-core",
+ "bones_schema 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "bones_utils 0.3.1",
+ "once_map",
+ "thiserror",
+]
+
+[[package]]
+name = "bones_ecs"
+version = "0.3.0"
 source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "anyhow",
  "atomicell",
  "bitset-core",
  "bones_ecs_macros",
- "bones_schema",
- "bones_utils",
+ "bones_schema 0.3.0 (git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7)",
+ "bones_utils 0.3.0",
  "once_map",
  "serde",
  "thiserror",
@@ -104,12 +119,29 @@ dependencies = [
 [[package]]
 name = "bones_schema"
 version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfcb57273b22a8e2375360166fcd891259d90cd2029559d5d03790453457f7a6"
+dependencies = [
+ "append-only-vec",
+ "bones_schema_macros 0.3.1",
+ "bones_utils 0.3.1",
+ "erased-serde 0.3.31",
+ "paste",
+ "serde",
+ "sptr",
+ "stable_deref_trait",
+ "ulid",
+]
+
+[[package]]
+name = "bones_schema"
+version = "0.3.0"
 source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
  "append-only-vec",
- "bones_schema_macros",
- "bones_utils",
- "erased-serde",
+ "bones_schema_macros 0.3.0",
+ "bones_utils 0.3.0",
+ "erased-serde 0.4.5",
  "paste",
  "serde",
  "sptr",
@@ -128,11 +160,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "bones_schema_macros"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "383b20661cba3e3dbf64517d11ae254f16325525035c06ef5d0d3a7e1a4307ca"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "venial",
+]
+
+[[package]]
 name = "bones_snap"
 version = "0.1.0"
 dependencies = [
  "bincode",
- "bones_ecs",
+ "bones_ecs 0.3.0 (git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7)",
  "serde",
  "snap_macro",
 ]
@@ -142,9 +185,31 @@ name = "bones_utils"
 version = "0.3.0"
 source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
 dependencies = [
- "bones_utils_macros",
+ "bones_utils_macros 0.3.0",
  "branches",
- "futures-lite",
+ "futures-lite 2.3.0",
+ "fxhash",
+ "getrandom",
+ "hashbrown",
+ "instant",
+ "maybe-owned",
+ "parking_lot",
+ "serde",
+ "smallvec",
+ "turborand",
+ "ulid",
+ "ustr",
+]
+
+[[package]]
+name = "bones_utils"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dbd6e85b9aac02aaab374690e2ba5ce1f1b353ae60ddf7ab72e150c3cc64b0da"
+dependencies = [
+ "bones_utils_macros 0.3.1",
+ "branches",
+ "futures-lite 1.13.0",
  "fxhash",
  "getrandom",
  "hashbrown",
@@ -162,6 +227,16 @@ dependencies = [
 name = "bones_utils_macros"
 version = "0.3.0"
 source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+dependencies = [
+ "quote",
+ "venial",
+]
+
+[[package]]
+name = "bones_utils_macros"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6bef799c442854931e44d23d2f037dea6a752e51eaa47050cbb63e37b88972a6"
 dependencies = [
  "quote",
  "venial",
@@ -193,12 +268,30 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "erased-serde"
+version = "0.3.31"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6c138974f9d5e7fe373eb04df7cae98833802ae4b11c24ac7039a21d5af4b26c"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "erased-serde"
 version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "24e2389d65ab4fab27dc2a5de7b191e1f6617d1f1c8855c0dc569c94a4cbb18d"
 dependencies = [
  "serde",
  "typeid",
+]
+
+[[package]]
+name = "fastrand"
+version = "1.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e51093e27b0797c359783294ca4f0a911c270184cb10f85783b118614a1501be"
+dependencies = [
+ "instant",
 ]
 
 [[package]]
@@ -221,11 +314,26 @@ checksum = "a44623e20b9681a318efdd71c299b6b222ed6f231972bfe2f224ebad6311f0c1"
 
 [[package]]
 name = "futures-lite"
+version = "1.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "49a9d51ce47660b1e808d3c990b4709f2f415d928835a17dfd16991515c46bce"
+dependencies = [
+ "fastrand 1.9.0",
+ "futures-core",
+ "futures-io",
+ "memchr",
+ "parking",
+ "pin-project-lite",
+ "waker-fn",
+]
+
+[[package]]
+name = "futures-lite"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "52527eb5074e35e9339c6b4e8d12600c7128b68fb25dcb9fa9dec18f7c25f3a5"
 dependencies = [
- "fastrand",
+ "fastrand 2.1.0",
  "futures-core",
  "futures-io",
  "parking",
@@ -325,6 +433,12 @@ name = "maybe-owned"
 version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4facc753ae494aeb6e3c22f839b158aebd4f9270f55cd3c79906c45476c47ab4"
+
+[[package]]
+name = "memchr"
+version = "2.7.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "once_cell"
@@ -487,6 +601,7 @@ checksum = "3c5e1a9a646d36c3599cd173a41282daf47c44583ad367b8e6837255952e5c67"
 name = "snap_core"
 version = "0.1.0"
 dependencies = [
+ "bones_ecs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "heck",
  "proc-macro2",
  "quote",
@@ -606,6 +721,12 @@ name = "version_check"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
+
+[[package]]
+name = "waker-fn"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "317211a0dc0ceedd78fb2ca9a44aed3d7b9b26f81870d485c07122b4350673b7"
 
 [[package]]
 name = "wasi"
