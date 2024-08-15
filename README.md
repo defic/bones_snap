@@ -52,9 +52,9 @@ impl SerializableEntity {
         let pos = pos.borrow();
         let vel = world.components.get_cell::<Vel>();
         let vel = vel.borrow();
-        let entities = (*world.get_resource::<Entities>().unwrap()).clone();
-        let mut serializables = $crate::vec::Vec::new();
-        for (entity) in entities.iter_with_bitset(entities.bitset()) {
+        let entities = world.resource::<Entities>();
+        let mut serializables = Vec::default();
+        for entity in entities.iter_with_bitset(entities.bitset()) {
             let entity_container = SerializableEntity {
                 entity: entity.clone(),
                 pos: pos.get(entity).cloned(),
@@ -83,18 +83,20 @@ impl SerializableEntity {
 #[derive(Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct BonesSnap {
     pub entity_containers: Vec<SerializableEntity>,
-    pub entities: Entities,
+    pub entities: Option<Entities>,
 }
 impl BonesSnap {
     pub fn collect(world: &World) -> Self {
         let entity_containers = SerializableEntity::run_collect(world);
         BonesSnap {
             entity_containers,
-            entities: (*world.get_resource::<Entities>().unwrap()).clone(),
+            entities: world.get_resource::<Entities>().map(|x| (*x).clone()),
         }
     }
     pub fn populate(self, world: &mut World) {
-        world.insert_resource(self.entities);
+        if let Some(r) = self.entities {
+            world.insert_resource(r);
+        }
         SerializableEntity::run_populate(world, self.entity_containers);
     }
 }
