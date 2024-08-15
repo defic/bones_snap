@@ -81,10 +81,10 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
 
                 #(#component_stores_borrow)*
 
-                let entities = (*world.get_resource::<Entities>().unwrap()).clone();
-                let mut serializables = vec![];
+                let entities = world.resource::<Entities>();
+                let mut serializables = Vec::default();
 
-                for (entity) in entities.iter_with_bitset(entities.bitset()) {
+                for entity in entities.iter_with_bitset(entities.bitset()) {
 
                     let entity_container = SerializableEntity {
                         entity: entity.clone(),
