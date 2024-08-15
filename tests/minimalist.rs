@@ -14,6 +14,6 @@ struct Vol;
 fn test_bones_snap_struct_generation() {
     bones_snap! {
         Components(Pos, Vel, Vol),
-        Resources(Pos, Vel)
+        Resources(Entities)
     }
 }

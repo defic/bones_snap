@@ -31,21 +31,24 @@ pub fn bones_snap(input: TokenStream) -> TokenStream {
     let resource_fields = input.resources.iter().map(|resource| {
         let field_name = &resource.snake_case;
         let type_name = &resource.type_name;
-        quote! { pub #field_name: #type_name }
+        quote! { pub #field_name: Option<#type_name> }
     });
 
     let resource_field_initialization = input.resources.iter().map(|resource| {
         let field_name = &resource.snake_case;
         let type_name = &resource.type_name;
         quote! {
-            #field_name: (*world.get_resource::<#type_name>().unwrap()).clone()
+            #field_name: world.get_resource::<#type_name>().map(|x| (*x).clone())
         }
     });
 
     let resource_population = input.resources.iter().map(|resource| {
         let field_name = &resource.snake_case;
         quote! {
-            world.insert_resource(self.#field_name);
+            if let Some(r) = self.#field_name {
+                world.insert_resource(r);
+            }
+
         }
     });
 
