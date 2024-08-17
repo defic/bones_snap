@@ -84,13 +84,13 @@ dependencies = [
 [[package]]
 name = "bones_ecs"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "anyhow",
  "atomicell",
  "bitset-core",
  "bones_ecs_macros",
- "bones_schema 0.3.0 (git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7)",
+ "bones_schema 0.3.0 (git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202)",
  "bones_utils 0.3.0",
  "once_map",
  "serde",
@@ -100,7 +100,7 @@ dependencies = [
 [[package]]
 name = "bones_ecs_macros"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "bones_ecs_macros_core",
  "proc-macro2",
@@ -109,7 +109,7 @@ dependencies = [
 [[package]]
 name = "bones_ecs_macros_core"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -136,7 +136,7 @@ dependencies = [
 [[package]]
 name = "bones_schema"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "append-only-vec",
  "bones_schema_macros 0.3.0",
@@ -152,7 +152,7 @@ dependencies = [
 [[package]]
 name = "bones_schema_macros"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -175,7 +175,7 @@ name = "bones_snap"
 version = "0.1.0"
 dependencies = [
  "bincode",
- "bones_ecs 0.3.0 (git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7)",
+ "bones_ecs 0.3.0 (git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202)",
  "serde",
  "snap_macro",
 ]
@@ -183,7 +183,7 @@ dependencies = [
 [[package]]
 name = "bones_utils"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "bones_utils_macros 0.3.0",
  "branches",
@@ -226,7 +226,7 @@ dependencies = [
 [[package]]
 name = "bones_utils_macros"
 version = "0.3.0"
-source = "git+https://github.com/defic/bones?rev=3c7e5ba191194dd0222d236a7189c63db58476c7#3c7e5ba191194dd0222d236a7189c63db58476c7"
+source = "git+https://github.com/fishfolk/bones?rev=c149919fe60e57e20e2db1c3711d5b08fe194202#c149919fe60e57e20e2db1c3711d5b08fe194202"
 dependencies = [
  "quote",
  "venial",

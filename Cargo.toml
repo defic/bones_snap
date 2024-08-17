@@ -10,6 +10,5 @@ snap_macro = { path = "snap_macro" }
 serde = { version = "1", features = ["derive"] }
 
 [dev-dependencies]
-bincode = "1.3.3"
-bones_ecs = { git = "https://github.com/defic/bones", rev = "3c7e5ba191194dd0222d236a7189c63db58476c7", features = ["derive", "serde"] }
-
+bincode = "1.3"
+bones_ecs = { git = "https://github.com/fishfolk/bones", rev = "c149919fe60e57e20e2db1c3711d5b08fe194202", features = ["derive", "serde"] }
